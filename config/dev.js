@@ -1,4 +1,4 @@
 module.exports = {
-    mongouri = "mongodb://navneet:navneet123@ds263928.mlab.com:63928/heroku_zh7fg2d4"
+    mongouri = "mongodb://ecommerce:navneet123@ds127644.mlab.com:27644/heroku_pvgfb9b4"
 
 }
