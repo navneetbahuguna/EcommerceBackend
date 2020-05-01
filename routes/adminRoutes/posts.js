@@ -3,6 +3,7 @@ const mongoose = require("mongoose")
 const bodyparser = require("body-parser")
 const morgan = require("morgan")
 const express = require("express")
+var bcrypt = require('bcryptjs');
 
 require("../../mongo")  //return data from mongo.js file
 
@@ -25,7 +26,7 @@ router.use(bodyparser.json())
 
 console.log("data start")
 
-router.get("/extractAllData", async (req, res) => {
+router.get("/adminExtractAllData", async (req, res) => {
     try{
          const posts =  await Post.find({})
          console.log("extractAllData done")
@@ -39,7 +40,7 @@ router.get("/extractAllData", async (req, res) => {
 }});
 
 //extractData
-router.post("/extractSingleData",  async(req,res) => {
+router.post("/adminExtractSingleData",  async(req,res) => {
      try{
           var data = req.body;
           //var name = req.body;
@@ -59,7 +60,7 @@ router.post("/extractSingleData",  async(req,res) => {
 
 
 //update data
-router.post("/update", async(req, res) =>{
+router.post("/adminUpdateData", async(req, res) =>{
     try{
          console.log("data",req.body)
          const post = await Post.findByIdAndUpdate({
@@ -77,7 +78,7 @@ router.post("/update", async(req, res) =>{
 
 
 //delete data
-router.post("/delete", async (req, res) =>{
+router.post("/adminDeleteData", async (req, res) =>{
     try{
          console.log("name", req.body.id)
          const post = await Post.findByIdAndRemove({
@@ -89,36 +90,32 @@ router.post("/delete", async (req, res) =>{
     }
 })
 
-router.post("/enterData", async (req, res) =>{
-    const posts = new Post();
-    console.log("Admin enter data api")
-    console.log('request data ->', req.body) //showing data in cmd
-    posts.name = req.body.name;
-    console.log(posts.name)
-    posts.contact = req.body.contact;
-    console.log(posts.contact)
-    posts.email = req.body.email;
-    console.log(posts.email)
-    posts.password = req.body.password;
-    console.log(posts.password)
+router.post("/adminSignup", async (req, res) =>{
     Post.findOne({"email": req.body.email})
           .then(userDoc => {
                if(userDoc){
                     console.log("email exist")
                     res.send("Email Exist")
-               }
+               }else {
                //this.post.save()
-               posts.save((err, result) =>{
-                    if (err){
-                         return res.status(400).json({
-                              error : err
-                         })
-                    }
-                    res.status(200).json({
-                     post: result,
-                       })
-               }); 
-         
+               const posts = new Post();
+               console.log("Admin enter data api")
+               console.log('request data ->', req.body) //showing data in cmd
+               posts.name = req.body.name;
+               console.log(posts.name)
+               posts.contact = req.body.contact;
+               console.log(posts.contact)
+               posts.email = req.body.email;
+               console.log(posts.email)
+               pass = req.body.password;
+               console.log(pass)
+               newpass = bcrypt.hashSync(pass, 12)
+               posts.password = newpass;
+               console.log(posts.password)
+               posts.save()
+               res.send("data inserted")
+              
+               }
     }).catch(err => {
          console.log("error in post ")
          //res.status(500)
@@ -126,5 +123,46 @@ router.post("/enterData", async (req, res) =>{
     });
 
 })
+
+router.post("/adminLogin", async (req, res) =>{
+     const posts = new Post();
+     console.log("Admin login data api")
+     console.log('request data ->', req.body) //showing data in cmd
+     
+     posts.email = req.body.email;
+     console.log(posts.email)
+     password = req.body.password;
+     console.log(password)
+     Post.findOne({"email": req.body.email})
+           .then(userDoc => {
+                //console.log("")
+                if(!userDoc){
+                     //console.log("email exist")
+                     res.send("Email not exist Exist")
+                }
+                //this.post.save()
+                else{
+                     console.log("password matching")
+                     bcrypt.compare(password, userDoc.password)
+                     .then(doMatch =>{
+                          console.log("password match")
+                         //  req.session.isLoggedIn = true;
+                         //  req.session.user = userDoc;
+                         //  req.session.save(err =>{
+                         //       console.log(err);
+                         //       res.send("save session");
+                         //  })
+                          res.send("AdminLogin")
+                     })
+                 
+                }
+     }).catch(err => {
+          console.log("error in post ")
+          //res.status(500)
+ 
+     });
+ 
+ })
+
 
 module.exports = router;
