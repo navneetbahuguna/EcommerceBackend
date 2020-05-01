@@ -90,7 +90,6 @@ router.post("/delete", async (req, res) =>{
 })
 
 router.post("/enterData", async (req, res) =>{
-    try{
     const posts = new Post();
     console.log("Admin enter data api")
     console.log('request data ->', req.body) //showing data in cmd
@@ -102,31 +101,32 @@ router.post("/enterData", async (req, res) =>{
     console.log(posts.email)
     posts.password = req.body.password;
     console.log(posts.password)
-    posts.save((err, result) =>{
-         if (err){
-              return res.status(400).json({
-                   error : err
-              })
-         }
-         res.status(200).json({
-          post: result,
-          //res.json(posts)
-               //showing in postman (response) and save in database
-         })
-    }); 
-    //res.json(posts)
-    //res.writeHead(200, {"Content-Type": "application/json"});
-
-    //console.log("1")
-    //res.send(posts) // for showing the response
-    //return next();
-    console.log("2")
-    }catch(error){
+    Post.findOne({"email": req.body.email})
+          .then(userDoc => {
+               if(userDoc){
+                    console.log("email exist")
+                    res.send("Email Exist")
+               }
+               else{
+                    console.log("unique data")
+               this.post.save()}
+               // posts.save((err, result) =>{
+               //      if (err){
+               //           return res.status(400).json({
+               //                error : err
+               //           })
+               //      }
+               //      res.status(200).json({
+               //       post: result,
+               //         })
+               // }); 
+         
+    }).catch(err => {
          console.log("error in post ")
          //res.status(500)
 
-    }
-    
+    });
+
 })
 
 module.exports = router;
