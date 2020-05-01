@@ -1,0 +1,14 @@
+Admin api
+http://localhost:4002/
+/NBProject/extractAllData
+/NBProject/extractSingleData
+/NBProject/update
+/NBProject/delete
+/NBProject/enterData
+
+User api 
+/NBProject/signup
+
+
+//global url 
+https://restanavneet.herokuapp.com/NBProject/extractAllData
