@@ -3,6 +3,7 @@ const mongoose = require("mongoose")
 const bodyparser = require("body-parser")
 const morgan = require("morgan")
 const express = require("express")
+var bcrypt = require('bcryptjs');
 
 require("../../mongo")  //return data from mongo.js file
 
@@ -30,8 +31,8 @@ router.post("/userSignup", async (req, res) =>{
                 }else {
                 //this.post.save()
                 const posts = new Post();
-                console.log("Admin enter data api")
-                console.log('request data ->', req.body) //showing data in cmd
+                console.log("user enter data api")
+                //console.log('request data ->', req.body) //showing data in cmd
                 posts.name = req.body.name;
                 console.log(posts.name)
                 posts.contact = req.body.contact;
