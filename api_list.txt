@@ -1,14 +1,74 @@
-Admin api
-http://localhost:4002/
-/NBProject/extractAllData
-/NBProject/extractSingleData
-/NBProject/update
-/NBProject/delete
-/NBProject/enterData
-
-User api 
-/NBProject/signup
-
+local  api
+http://localhost:4008/{anyAPI}
 
 //global url 
-https://restanavneet.herokuapp.com/NBProject/extractAllData
+BASE URL : - https://infinite-wildwood-05252.herokuapp.com/NBProject
+
+ADMIN SIGNUP & LOGIN API :-
+
+1. https://infinite-wildwood-05252.herokuapp.com/NBProject/adminExtractAllData
+ex -> {
+    "_id": "5eac61edffebb57bd7abd91c",
+    "name": "Bahuguna",
+    "contact": "07417383568",
+    "email": "navneet@visualaiww.io",
+    "password": "1234567",
+    "__v": 0
+  }
+
+
+2. /adminExtractSingleData
+ex - > 
+{
+    "name": "Bahuguna"
+}
+
+
+3. /adminUpdateData
+ex - >
+{
+    "_id": "5eac61edffebb57bd7abd91c",
+    "name": "Bahuguna",
+}
+
+
+4. /adminDeleteData
+ex -> {
+    "id": "5eac61edffebb57bd7abd91c" }
+
+
+5. /adminSignup
+ex -> {
+ "name": "Navneet",
+    "contact": "07417383568",
+    "email": "navneet@visualawww.io",
+    "password": "1234567"
+}
+
+
+6. /adminLogin
+ex - > {
+   
+        "email": "navneet@visualai1234w.io",
+        "password": "1234567"
+ 
+}
+
+
+USER SIGNUP & LOGIN API
+1. /userSignup
+ex -> {
+ "name": "Navneet",
+    "contact": "07417383568",
+    "email": "navneet@visualawww.io",
+    "password": "1234567"
+}
+
+
+2. /userLogin
+ex - > {
+   
+        "email": "navneet@visualai1234w.io",
+        "password": "1234567"
+ 
+}
