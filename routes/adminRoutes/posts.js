@@ -107,19 +107,17 @@ router.post("/enterData", async (req, res) =>{
                     console.log("email exist")
                     res.send("Email Exist")
                }
-               else{
-                    console.log("unique data")
-               this.post.save()}
-               // posts.save((err, result) =>{
-               //      if (err){
-               //           return res.status(400).json({
-               //                error : err
-               //           })
-               //      }
-               //      res.status(200).json({
-               //       post: result,
-               //         })
-               // }); 
+               //this.post.save()
+               posts.save((err, result) =>{
+                    if (err){
+                         return res.status(400).json({
+                              error : err
+                         })
+                    }
+                    res.status(200).json({
+                     post: result,
+                       })
+               }); 
          
     }).catch(err => {
          console.log("error in post ")
