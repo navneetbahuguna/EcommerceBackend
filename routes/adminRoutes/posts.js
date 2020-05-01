@@ -24,6 +24,7 @@ router.use(bodyparser.urlencoded({ extended: true }));
 router.use(bodyparser.json())
 
 console.log("data start")
+
 router.get("/extractAllData", async (req, res) => {
     try{
          const posts =  await Post.find({})
