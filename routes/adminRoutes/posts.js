@@ -50,8 +50,8 @@ router.get("/adminExtractAllData", async (req, res) => {
     try{
          const posts =  await Post.find({})
          console.log("extractAllData done")
-         res.header("Access-Control-Allow-Origin", "*");
-         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+         //res.header("Access-Control-Allow-Origin", "*");
+         //res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
          res.send(posts)
 
     } catch (error){
