@@ -2,6 +2,8 @@ const router = require("express").Router();
 const mongoose = require("mongoose")
 const bodyparser = require("body-parser")
 const morgan = require("morgan")
+var cors = require('cors')
+
 const express = require("express")
 var bcrypt = require('bcryptjs');
 
@@ -16,6 +18,8 @@ router.use(express.json({inflate: true,
 require("../../model/Post")
 const Post = mongoose.model("signup")
 router.use(bodyparser.json())
+router.use(cors())
+
 //router.use(morgan())
 //app.use(logger('combined'));
 
@@ -25,11 +29,29 @@ router.use(bodyparser.urlencoded({ extended: true }));
 router.use(bodyparser.json())
 
 console.log("data start")
-
+router.use((req, res, next) => {
+     res.header("Access-Control-Allow-Origin", "*");
+     res.header(
+       "Access-Control-Allow-Headers",
+       "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+     );
+     if (req.method === "OPTIONS") {
+       res.header(
+         "Access-Control-Allow-Headers",
+         "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+       );
+       res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH");
+       return res.status(200).json({});
+     }
+     next();
+   });
+   
 router.get("/adminExtractAllData", async (req, res) => {
     try{
          const posts =  await Post.find({})
          console.log("extractAllData done")
+         res.header("Access-Control-Allow-Origin", "*");
+         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
          res.send(posts)
 
     } catch (error){
